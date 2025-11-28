@@ -1,22 +1,20 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Games from "./pages/Games";
-import TopUp from "./pages/TopUp";
-import Dashboard from "./pages/Dashboard";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Games from "./pages/Games";
+import Topup from "./pages/Topup";
 
 function App() {
   return (
-    <div className="min-h-screen bg-neutral-900 text-white">
+    <Router>
       <Navbar />
-
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Games />} />
         <Route path="/games" element={<Games />} />
-        <Route path="/topup" element={<TopUp />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/topup/:gameName" element={<Topup />} />
       </Routes>
-    </div>
+      <Footer />
+    </Router>
   );
 }
 

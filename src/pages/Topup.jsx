@@ -1,47 +1,35 @@
-import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { games } from "../data/games";
 
-export default function TopUp() {
-  const [uid, setUid] = useState("");
-  const [server, setServer] = useState("");
-  const [amount, setAmount] = useState("");
+export default function Topup() {
+  const { gameName } = useParams();
+  const navigate = useNavigate();
+  const game = games.find((g) => g.name.replace(/\s/g, "") === gameName);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Top-up Requested:\nUID: ${uid}\nServer: ${server}\nAmount: ${amount}`);
-  };
+  if (!game)
+    return <div className="text-center mt-10 text-red-600">Game not found</div>;
 
   return (
-    <div className="p-10 max-w-md mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Top-up Form</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="text"
-          placeholder="UID"
-          value={uid}
-          onChange={(e) => setUid(e.target.value)}
-          className="p-3 rounded bg-neutral-800 border border-neutral-700 text-white"
-          required
+    <div className="flex flex-col items-center mt-10">
+      {/* Stylish Back Button */}
+      <button
+        onClick={() => navigate(-1)}
+        className="mb-6 px-6 py-2 bg-white shadow-md rounded-full flex items-center gap-2 hover:shadow-xl transition transform hover:-translate-y-1"
+      >
+        <span className="text-blue-500 font-semibold">← Back</span>
+      </button>
+
+      {/* Game Image with Hover Zoom */}
+      <div className="overflow-hidden rounded-lg shadow-md hover:scale-105 transition-transform">
+        <img
+          src={game.image}
+          alt={game.name}
+          style={{ width: "250px", height: "250px", objectFit: "cover" }}
         />
-        <input
-          type="text"
-          placeholder="Server"
-          value={server}
-          onChange={(e) => setServer(e.target.value)}
-          className="p-3 rounded bg-neutral-800 border border-neutral-700 text-white"
-          required
-        />
-        <input
-          type="number"
-          placeholder="Amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="p-3 rounded bg-neutral-800 border border-neutral-700 text-white"
-          required
-        />
-        <button className="bg-purple-600 hover:bg-purple-700 text-white p-3 rounded font-bold">
-          Submit
-        </button>
-      </form>
+      </div>
+
+      {/* Game Title */}
+      <h1 className="text-3xl font-bold mt-4">{game.name}</h1>
     </div>
   );
 }

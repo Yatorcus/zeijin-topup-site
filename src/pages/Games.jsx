@@ -1,27 +1,19 @@
-import React from "react";
-import GameCard from "../components/GameCard";
-import mlbb from "../assets/mlbb.jpg";
-import genshin from "../assets/genshin.jpg";
-import codm from "../assets/codm.png";
-import valorant from "../assets/valorant.jpg";
-
-const games = [
-  { name: "MLBB", img: mlbb },
-  { name: "Genshin Impact", img: genshin },
-  { name: "COD Mobile", img: codm },
-  { name: "Valorant", img: valorant },
-];
-
+import { Link } from "react-router-dom";
+import { games } from "../data/games";
 
 export default function Games() {
   return (
-    <div className="p-10">
-      <h1 className="text-4xl font-bold mb-6">Games</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {games.map((game) => (
-          <GameCard key={game.name} name={game.name} img={game.img} />
-        ))}
-      </div>
+    <div className="max-w-4xl mx-auto mt-10 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {games.map((game) => (
+        <Link
+          key={game.name}
+          to={`/topup/${game.name.replace(/\s/g, "")}`}
+        >
+          <div className="bg-white shadow-md rounded-lg hover:scale-105 transition-transform flex items-center justify-center h-24">
+            <h2 className="font-bold text-lg text-center">{game.name}</h2>
+          </div>
+        </Link>
+      ))}
     </div>
   );
 }
